@@ -79,10 +79,10 @@ class MyHomePage extends StatelessWidget {
     // than having to individually change instances of widgets.
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'nyasia & co.',
-        ),
-      ),
+          title: const Text(
+            'nyasia & co.',
+          ),
+          backgroundColor: const Color.fromARGB(1000, 125, 216, 201)),
       body: SingleChildScrollView(
         // Widget wrapper yang dapat discroll
         child: Padding(
@@ -120,7 +120,7 @@ class MyHomePage extends StatelessWidget {
                   if (index == 0) {
                     backgroundColor = Colors.blue; // Warna "Lihat Item"
                   } else if (index == 1) {
-                    backgroundColor = Color.fromARGB(
+                    backgroundColor = const Color.fromARGB(
                         1000, 20, 207, 170); // Warna "Tambah Item"
                   } else if (index == 2) {
                     backgroundColor = Colors.red; // Warna "Logout"
