@@ -288,7 +288,77 @@ Dalam konteks pengembangan aplikasi Flutter, `StatelessWidget` dan `StatefulWidg
 # Tugas 8
 
 ## 1. Jelaskan perbedaan antara Navigator.push() dan Navigator.pushReplacement(), disertai dengan contoh mengenai penggunaan kedua metode tersebut yang tepat!
+- **`Navigator.push():`**
+  Metode ini menambahkan halaman baru ke dalam tumpukan navigasi. Ini berarti halaman baru ditumpuk di atas halaman saat ini.
+
+  Metode ini digunakan ketika ingin menambahkan halaman baru ke dalam tumpukan dan membiarkan pengguna dapat kembali ke halaman sebelumnya.
+  ```dart
+  Navigator.push(
+    context,
+    MaterialPageRoute(builder: (context) => SecondScreen()),
+    );
+  ```
+
+- **`Navigator.pushReplacement():`**
+  Metode ini menggantikan halaman saat ini dengan halaman baru. Ini berguna ketika Anda ingin menggantikan halaman saat ini dengan halaman yang baru, dan pengguna tidak perlu kembali ke halaman sebelumnya.
+
+  Metode ini digunakan ketika ingin menggantikan halaman saat ini dengan halaman baru, misalnya, setelah pengguna melakukan tindakan tertentu seperti login.
+  ```dart
+  Navigator.pushReplacement(
+    context,
+    MaterialPageRoute(builder: (context) => HomeScreen()),
+    );
+  ```
 ## 2. Jelaskan masing-masing layout widget pada Flutter dan konteks penggunaannya masing-masing!
+Berikut adalah penjelasan tentang beberapa widget layout di Flutter:
+
+- **Center()**: Widget ini digunakan untuk memposisikan widget anak di tengah. Ukuran widget ini akan sebesar mungkin jika properti `widthFactor` dan `heightFactor` diatur ke `null` dan dimensinya dibatasi. Jika dimensi tidak dibatasi dan `widthFactor` dan `HeightFactor` diatur ke `null`, maka widget Center akan mengambil ukuran widget anaknya.
+
+-  **Column()**: Widget ini digunakan untuk menampilkan widget anak dalam susunan vertikal. Untuk membuat anak memenuhi ruang vertikal yang tersedia, bungkus anak dalam widget Expanded. 
+
+- **Row()**: Widget ini digunakan untuk menampilkan widget anak dalam susunan horizontal. Untuk membuat anak memenuhi ruang horizontal yang tersedia, bungkus anak dalam widget Expanded. 
+
+- **MaterialApp**: Widget ini membungkus beberapa widget yang menggunakan tema material design.
+
+- **Scaffold**: Widget ini untuk struktur dasar material design.
+
+- **AppBar**: Widget ini untuk membuat AppBar.
+
+Setiap widget ini memiliki konteks penggunaannya masing-masing. Misalnya, widget `Center()` biasanya digunakan ketika Anda ingin memposisikan widget anak di tengah layar. Sementara itu, widget `Column()` dan `Row()` digunakan ketika Anda ingin menata widget anak secara vertikal dan horizontal.
+
 ## 3. Sebutkan apa saja elemen input pada form yang kamu pakai pada tugas kali ini dan jelaskan mengapa kamu menggunakan elemen input tersebut!
+- **TextFormField**
+
+  Berfungsi untuk memasukkan dan mengumpulkan data teks dari pengguna.
+
+  Alasan Penggunaannya karena `TextFormField` cocok untuk input teks dan memberikan fungsionalitas validasi dengan mudah, seperti memastikan bahwa input tidak kosong atau memenuhi kriteria tertentu.
+
+- **ElevatedButton**
+
+  Tombol untuk memicu tindakan atau proses, seperti menyimpan atau mengirimkan data.
+
+  Alasan Penggunaannya karena `ElevatedButton` memberikan tampilan yang jelas sebagai tombol tindakan utama dalam formulir.
+
+- **AlertDialog**
+
+  Berfungsi untuk menampilkan pesan atau konfirmasi kepada pengguna.
+
+  Alasan Penggunaannya karena `AlertDialog` memberikan _interface_ pengguna yang baik untuk menyampaikan informasi penting atau mengonfirmasi tindakan.
+
+- **Drawer**
+
+  Berfungsi untuk menyediakan menu navigasi dan tindakan.
+
+  Alasan Penggunaannya karena `Drawer` memberikan ruang untuk menempatkan opsi navigasi dan tindakan aplikasi, menjadikannya mudah diakses oleh pengguna.
+
 ## 4. Bagaimana penerapan clean architecture pada aplikasi Flutter?
+
+Penerapan Clean Architecture pada aplikasi Flutter melibatkan beberapa lapisan:
+
+1. **Data Layer**: Semua data yang akan ditampilkan ke pengguna berasal dari lapisan data. Lapisan ini biasanya melibatkan dua sumber data, yaitu dari API dan dari Database SQLite.
+2. **Domain Layer**: Repository berada di lapisan ini. Tujuan dari clean architecture adalah membuat kode menjadi lebih testable, maintainable, dan scalable.
+3. **Dependency Injection**: Dependency Injection (DI) adalah sebuah teknik untuk mensupply sebuah objek yang dibutuhkan oleh kelas lain.
+4. **BLoC (Business Logic Component)**: BLoC berada di lapisan ini.
+5. **Routing**: Routing juga merupakan bagian dari arsitektur ini.
+
 ## 5. Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step! (bukan hanya sekadar mengikuti tutorial)

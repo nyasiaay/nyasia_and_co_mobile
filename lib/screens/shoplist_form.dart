@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-// TODO: Impor drawer yang sudah dibuat sebelumnya
 import 'package:nyasia_and_co/widgets/left_drawer.dart';
+import 'package:nyasia_and_co/models/models.dart';
+
+List<Item> itemList = [];
 
 class ShopFormPage extends StatefulWidget {
   const ShopFormPage({super.key});
@@ -114,10 +116,17 @@ class _ShopFormPageState extends State<ShopFormPage> {
                   padding: const EdgeInsets.all(8.0),
                   child: ElevatedButton(
                     style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(const Color.fromARGB(255, 125, 216, 201)),
+                      backgroundColor: MaterialStateProperty.all(
+                          const Color.fromARGB(255, 125, 216, 201)),
                     ),
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
+                        Item newItem = Item(
+                          name: _name,
+                          amount: _amount,
+                          description: _description,
+                        );
+                        itemList.add(newItem);
                         showDialog(
                           context: context,
                           builder: (context) {
