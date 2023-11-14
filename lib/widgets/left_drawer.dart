@@ -29,7 +29,7 @@ class LeftDrawer extends StatelessWidget {
                 ),
                 Padding(padding: EdgeInsets.all(10)),
                 Text(
-                  "Catat seluruh keperluan belanjamu di sini!",
+                  "Welcome to nyasia & co.!",
                   style: TextStyle(
                     fontSize: 15, // Ukuran font 15
                     color: Colors.white, // Warna teks putih

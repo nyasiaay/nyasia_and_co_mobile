@@ -289,7 +289,7 @@ Dalam konteks pengembangan aplikasi Flutter, `StatelessWidget` dan `StatefulWidg
 
 ## 1. Jelaskan perbedaan antara Navigator.push() dan Navigator.pushReplacement(), disertai dengan contoh mengenai penggunaan kedua metode tersebut yang tepat!
 - **`Navigator.push():`**
-  Metode ini menambahkan halaman baru ke dalam tumpukan navigasi. Ini berarti halaman baru ditumpuk di atas halaman saat ini.
+  Metode `push()` menambahkan suatu _route_ ke dalam _stack_ _route_ yang dikelola oleh `Navigator`. Metode ini menyebabkan _route_ yang ditambahkan berada pada paling atas _stack_, sehingga _route_ yang baru saja ditambahkan tersebut akan muncul dan ditampilkan kepada pengguna.
 
   Metode ini digunakan ketika ingin menambahkan halaman baru ke dalam tumpukan dan membiarkan pengguna dapat kembali ke halaman sebelumnya.
   ```dart
@@ -300,7 +300,7 @@ Dalam konteks pengembangan aplikasi Flutter, `StatelessWidget` dan `StatefulWidg
   ```
 
 - **`Navigator.pushReplacement():`**
-  Metode ini menggantikan halaman saat ini dengan halaman baru. Ini berguna ketika Anda ingin menggantikan halaman saat ini dengan halaman yang baru, dan pengguna tidak perlu kembali ke halaman sebelumnya.
+  Metode `pushReplacement()` menghapus _route_ yang sedang ditampilkan kepada pengguna dan menggantinya dengan suatu _route_. Metode ini menyebabkan aplikasi untuk berpindah dari _route_ yang sedang ditampilkan kepada pengguna ke suatu _route_ yang diberikan.
 
   Metode ini digunakan ketika ingin menggantikan halaman saat ini dengan halaman baru, misalnya, setelah pengguna melakukan tindakan tertentu seperti login.
   ```dart
@@ -327,38 +327,418 @@ Berikut adalah penjelasan tentang beberapa widget layout di Flutter:
 Setiap widget ini memiliki konteks penggunaannya masing-masing. Misalnya, widget `Center()` biasanya digunakan ketika Anda ingin memposisikan widget anak di tengah layar. Sementara itu, widget `Column()` dan `Row()` digunakan ketika Anda ingin menata widget anak secara vertikal dan horizontal.
 
 ## 3. Sebutkan apa saja elemen input pada form yang kamu pakai pada tugas kali ini dan jelaskan mengapa kamu menggunakan elemen input tersebut!
-- **TextFormField**
 
-  Berfungsi untuk memasukkan dan mengumpulkan data teks dari pengguna.
-
-  Alasan Penggunaannya karena `TextFormField` cocok untuk input teks dan memberikan fungsionalitas validasi dengan mudah, seperti memastikan bahwa input tidak kosong atau memenuhi kriteria tertentu.
-
-- **ElevatedButton**
-
-  Tombol untuk memicu tindakan atau proses, seperti menyimpan atau mengirimkan data.
-
-  Alasan Penggunaannya karena `ElevatedButton` memberikan tampilan yang jelas sebagai tombol tindakan utama dalam formulir.
-
-- **AlertDialog**
-
-  Berfungsi untuk menampilkan pesan atau konfirmasi kepada pengguna.
-
-  Alasan Penggunaannya karena `AlertDialog` memberikan _interface_ pengguna yang baik untuk menyampaikan informasi penting atau mengonfirmasi tindakan.
-
-- **Drawer**
-
-  Berfungsi untuk menyediakan menu navigasi dan tindakan.
-
-  Alasan Penggunaannya karena `Drawer` memberikan ruang untuk menempatkan opsi navigasi dan tindakan aplikasi, menjadikannya mudah diakses oleh pengguna.
+- **`TextFormField` untuk Nama Item**
+  Berfungsi untuk memasukkan dan mengumpulkan data nama item dari input pengguna. Untuk Nama Item saya menggunakan tipe data `string`. Memiliki fungsi `validator` untuk memastikan input sudah diisi
+- **`TextFormField` untuk Jumlah**
+  Berfungsi untuk memasukkan dan mengumpulkan data jumlah dari input pengguna. Untuk jumla saya menggunakan tipe data `integer`. Memiliki fungsi `validator` untuk memastikan input sudah diisi dan merupakan angka
+- **`TextFormField` untuk Deskripsi**
+  Berfungsi untuk memasukkan dan mengumpulkan data deskripsi dari input pengguna. Untuk deskripsi saya menggunakan tipe data `string`. Memiliki fungsi `validator` untuk memastikan input sudah diisi
 
 ## 4. Bagaimana penerapan clean architecture pada aplikasi Flutter?
 
-Penerapan Clean Architecture pada aplikasi Flutter melibatkan beberapa lapisan:
+Berikut adalah lapisan utama dalam Clean Architecture pada Flutter:
 
-1. **Data Layer**: Semua data yang akan ditampilkan ke pengguna berasal dari lapisan data. Lapisan ini biasanya melibatkan dua sumber data, yaitu dari API dan dari Database SQLite.
-2. **Domain Layer**: Repository berada di lapisan ini. Tujuan dari clean architecture adalah membuat kode menjadi lebih testable, maintainable, dan scalable.
-3. **Dependency Injection**: Dependency Injection (DI) adalah sebuah teknik untuk mensupply sebuah objek yang dibutuhkan oleh kelas lain.
-4. **BLoC (Business Logic Component)**: BLoC berada di lapisan ini.
-5. **Routing**: Routing juga merupakan bagian dari arsitektur ini.
+1. **Data Layer**: Lapisan ini bertanggung jawab atas pengambilan dan penyimpanan data. Lapisan data terdiri dari repositori, sumber data, dan model. Repositori adalah kelas yang dapat berinteraksi dengan nol atau beberapa sumber data untuk mengekspos data ke bagian lain dari aplikasi, sementara sumber data bertanggung jawab untuk memberikan data yang dibutuhkan aplikasi untuk melakukan fungsi.
+
+2. **Domain Layer**: Lapisan ini mewakili logika bisnis inti dari aplikasi. Lapisan domain mengelola logika bisnis.
+
+3. **Presentation Layer**: Lapisan ini mengandung komponen _interface_, seperti widget, layar, dan tampilan. Lapisan ini bertanggung jawab untuk menangani interaksi pengguna dan merender UI.
+
 
 ## 5. Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step! (bukan hanya sekadar mengikuti tutorial)
+1. Pertama-tama, saya membuat direktori baru dengan nama `widgets` dan berkas baru dengan nama `left_drawer.dart` dan mengisinya dengan kode berikut
+    ```dart
+    import 'package:flutter/material.dart';
+    import 'package:nyasia_and_co/screens/menu.dart';
+    import 'package:nyasia_and_co/screens/shoplist_form.dart';
+    import 'package:nyasia_and_co/screens/list_item.dart';
+
+    class LeftDrawer extends StatelessWidget {
+    const LeftDrawer({super.key});
+
+    @override
+    Widget build(BuildContext context) {
+        return Drawer(
+        child: ListView(
+            children: [
+            const DrawerHeader(
+                // TODO: Bagian drawer header
+                decoration: BoxDecoration(
+                color: Color.fromARGB(255, 125, 216, 201),
+                ),
+                child: Column(
+                children: [
+                    Text(
+                    'nyasia & co.',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                    ),
+                    ),
+                    Padding(padding: EdgeInsets.all(10)),
+                    Text(
+                    "Welcome to nyasia & co.!",
+                    style: TextStyle(
+                        fontSize: 15, 
+                        color: Colors.white, 
+                        fontWeight: FontWeight.normal, 
+                    ),
+                    textAlign: TextAlign.center, 
+                    )
+                ],
+                ),
+            ),
+
+            // TODO: Bagian routing
+            ListTile(
+                leading: const Icon(Icons.home_outlined),
+                title: const Text('Halaman Utama'),
+                // Bagian redirection ke MyHomePage
+                onTap: () {
+                Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => MyHomePage(),
+                    ));
+                },
+            ),
+            ListTile(
+                leading: const Icon(Icons.add_shopping_cart),
+                title: const Text('Tambah Item'),
+                // Bagian redirection ke ShopFormPage
+                onTap: () {
+                Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => ShopFormPage(),
+                    ));
+                },
+            ),
+            ListTile(
+                leading: const Icon(Icons.checklist),
+                title: const Text('Lihat Item'),
+                // Bagian redirection ke FragranceFormPage
+                onTap: () {
+                Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => ItemListPage(itemList: itemList),
+                    ));
+                },
+            )
+            ],
+        ),
+        );
+    }
+    }
+    ```
+2. Lalu, saya tidak lupa untuk mengimpor _widget drawer_ yang sudah dibuat pada berkas `menu.dart`
+    ```dart
+    import 'package:flutter/material.dart';
+    import 'package:nyasia_and_co/widgets/left_drawer.dart';
+    import 'package:nyasia_and_co/widgets/shop_card.dart';
+    ```
+3. Untuk membuat halaman form pada aplikasi saya membuat berkas baru bernama `shoplist_form.dart` dan mengisinya dengan kode sebagai berikut
+    ```dart
+    import 'package:flutter/material.dart';
+    import 'package:nyasia_and_co/widgets/left_drawer.dart';
+    import 'package:nyasia_and_co/models/models.dart';
+
+    List<Item> itemList = [];
+
+    class ShopFormPage extends StatefulWidget {
+    const ShopFormPage({super.key});
+
+    @override
+    State<ShopFormPage> createState() => _ShopFormPageState();
+    }
+
+    class _ShopFormPageState extends State<ShopFormPage> {
+    @override
+    Widget build(BuildContext context) {
+        return Scaffold(
+        appBar: AppBar(
+            title: const Center(
+            child: Text(
+                'Form Tambah Item',
+            ),
+            ),
+            backgroundColor: Color.fromARGB(1000, 125, 216, 201),
+            foregroundColor: Colors.white,
+        ),
+        // TODO: Tambahkan drawer yang sudah dibuat di sini
+        drawer: const LeftDrawer(),
+        body: Form(
+            key: _formKey,
+            child: SingleChildScrollView(
+    ```
+4. Lalu, saya membuat variabel baru bernama `_formKey` untuk handler dari form _state_, validasi form, dan penyimpanan form. Setelah itu, menambahkan `_formKey` ke dalam atribut _key_ pada _widget_ 
+    ```dart
+    ...
+    class _ShopFormPageState extends State<ShopFormPage> {
+        final _formKey = GlobalKey<FormState>();
+    ...
+    ```
+    ```dart
+    ...
+    body: Form(
+        key: _formKey,
+        child: SingleChildScrollView(),
+    ),
+    ...
+    ```
+3. Selanjutnya saya mengisi _widget_ `form` dengan field dengan variabel `_name`, `_amount` dan `_description`
+    ```dart
+    final _formKey = GlobalKey<FormState>();
+    String _name = "";
+    int _amount = 0;
+    String _description = "";
+    ```
+5. Kemudian saya membuat widget column sebagai _child_ dari `SingleChildScrollView`
+    ```dart
+    ...
+    body: Form(
+        key: _formKey,
+        child: SingleChildScrollView(
+            child: Column()
+        ),
+    ...
+    ```
+6. Selanjutnya saya mebuat _widget_ `TextFormField` yang dibungkus oleh `Padding` yang merupakan _children_ dari _widget_ `Column` untuk `name`, `amount`, dan `description`. Lalu menambahkan `crossAxisAlignment` untuk atur _alignment_ _children_. Saya juga menambahkan validator agar input wajib diisi
+    ```dart
+    Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextFormField(
+                  decoration: InputDecoration(
+                    hintText: "Deskripsi",
+                    labelText: "Deskripsi",
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(5.0),
+                    ),
+                  ),
+                  onChanged: (String? value) {
+                    setState(() {
+                      // TODO: Tambahkan variabel yang sesuai
+                      _description = value!;
+                    });
+                  },
+                  validator: (String? value) {
+                    if (value == null || value.isEmpty) {
+                      return "Deskripsi tidak boleh kosong!";
+                    }
+                    return null;
+                  },
+                ),
+              ),
+    ```
+7. Setelah itu saya menambahkan tombol yang dibungkus `Padding` serta `Align` yang merupakan _child_ dari `Column` untuk membuat _pop-up_. Lalu tambahkan fungsi `showDialog()` di bagian `onPressed()`. Setelah itu, munculkan `AlertDialog` dan menambahkan fungsi _reset form_
+    ```dart
+    Align(
+                alignment: Alignment.bottomCenter,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(
+                          const Color.fromARGB(255, 125, 216, 201)),
+                    ),
+                    onPressed: () {
+                      if (_formKey.currentState!.validate()) {
+                        Item newItem = Item(
+                          name: _name,
+                          amount: _amount,
+                          description: _description,
+                        );
+                        itemList.add(newItem);
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              title: const Text('Item berhasil tersimpan'),
+                              content: SingleChildScrollView(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    // TODO: Munculkan value-value lainnya
+                                    Text('Nama: $_name'),
+                                    Text('Jumlah: $_amount'),
+                                    Text('Deskripsi: $_description'),
+                                  ],
+                                ),
+                              ),
+                              actions: [
+                                TextButton(
+                                  child: const Text('OK'),
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                        _formKey.currentState!.reset();
+                      }
+                    },
+                    child: const Text(
+                      "Save",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                ),
+              ),
+    ```
+8. Kemudian saya membuat berkas baru yang bernama `shop_card dart` pada direktori `widgets`. Lalu memindahkan isi _widget_ `ShopItem` pada `menu.dart` berkas `shop_card.cart`
+    ```dart
+    import 'package:flutter/material.dart';
+    import 'package:nyasia_and_co/screens/shoplist_form.dart';
+    import 'package:nyasia_and_co/screens/list_item.dart';
+
+    class ShopItem {
+    final String name;
+    final IconData icon;
+    final Color color;
+
+    ShopItem(this.name, this.icon, this.color);
+    }
+
+    class ShopCard extends StatelessWidget {
+    final ShopItem item;
+
+    const ShopCard(this.item, {super.key}); // Constructor
+
+    @override
+    Widget build(BuildContext context) {
+        return Material(
+        color: item.color,
+        child: InkWell(
+            // Area responsive terhadap sentuhan
+            onTap: () {
+            // Memunculkan SnackBar ketika diklik
+            ScaffoldMessenger.of(context)
+                ..hideCurrentSnackBar()
+                ..showSnackBar(SnackBar(
+                    content: Text("Kamu telah menekan tombol ${item.name}!")));
+            if (item.name == "Tambah Item") {
+                Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                    builder: (context) => ShopFormPage(),
+                    ));
+            }
+            if (item.name == "Lihat Item") {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => ItemListPage(itemList: itemList)));
+            }
+            },
+            child: Container(
+            // Container untuk menyimpan Icon dan Text
+            padding: const EdgeInsets.all(8),
+            child: Center(
+                child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                    Icon(
+                    item.icon,
+                    color: Colors.white,
+                    size: 30.0,
+                    ),
+                    const Padding(padding: EdgeInsets.all(3)),
+                    Text(
+                    item.name,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(color: Colors.white),
+                    ),
+                ],
+                ),
+            ),
+            ),
+        ),
+        );
+    }
+    }
+    ```
+9. Untuk membuat halaman lihat item, saya membuat berkas baru bernama `list_item.dart` berisi kode berikut 
+    ```dart
+    import 'package:flutter/material.dart';
+    import 'package:nyasia_and_co/models/models.dart';
+    import 'package:nyasia_and_co/widgets/left_drawer.dart';
+
+    class ItemListPage extends StatelessWidget {
+    final List<Item> itemList;
+
+    const ItemListPage({Key? key, required this.itemList}) : super(key: key);
+
+    @override
+    Widget build(BuildContext context) {
+        return Scaffold(
+        appBar: AppBar(
+            title: const Text('Daftar Item'),
+            backgroundColor: Color.fromARGB(1000, 125, 216, 201),
+            foregroundColor: Colors.white,
+        ),
+        drawer: const LeftDrawer(),
+        body: ListView.builder(
+            itemCount: itemList.length,
+            itemBuilder: (context, index) {
+            return Card(
+                elevation: 5,
+                margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+                child: ListTile(
+                title: Text(itemList[index].name),
+                subtitle: Text('Jumlah: ${itemList[index].amount}'),
+                onTap: () {
+                    // Menampilkan popup dengan informasi barang yang di-klik
+                    showDialog(
+                    context: context,
+                    builder: (context) {
+                        return AlertDialog(
+                        title: Text(itemList[index].name),
+                        content: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                            Text('Jumlah: ${itemList[index].amount}'),
+                            Text('Deskripsi: ${itemList[index].description}'),
+                            ],
+                        ),
+                        actions: [
+                            TextButton(
+                            onPressed: () {
+                                Navigator.pop(context);
+                            },
+                            child: const Text('Tutup'),
+                            ),
+                        ],
+                        );
+                    },
+                    );
+                },
+                ),
+            );
+            },
+        ),
+        );
+    }
+    }
+    ```
+9. Kemudian saya membuat berkas dengan nama `screens` pada direktori `lib`. Lalu memindahkan berkas `menu.dart` dan `shoplist_form.dart` dan `list_item.dart` ke ke direktori `screens`.
+10. Setelah itu saya membuat direkoti baru dengan nama `models` pada direktori `lib` dan membuat berkas baru dengan nama `models.dart` berisi kode sebagai berikut
+    ```dart
+    class Item {
+    String name;
+    int amount;
+    String description;
+
+    Item({
+        required this.name,
+        required this.amount,
+        required this.description,
+    });
+    }
+    ```
