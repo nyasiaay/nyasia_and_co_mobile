@@ -293,10 +293,12 @@ Dalam konteks pengembangan aplikasi Flutter, `StatelessWidget` dan `StatefulWidg
 
   Metode ini digunakan ketika ingin menambahkan halaman baru ke dalam tumpukan dan membiarkan pengguna dapat kembali ke halaman sebelumnya.
   ```dart
-  Navigator.push(
-    context,
-    MaterialPageRoute(builder: (context) => SecondScreen()),
-    );
+  ...
+    if (item.name == "Tambah Produk") {
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => const ShopFormPage()));
+    }
+  ...
   ```
 
 - **`Navigator.pushReplacement():`**
@@ -304,10 +306,15 @@ Dalam konteks pengembangan aplikasi Flutter, `StatelessWidget` dan `StatefulWidg
 
   Metode ini digunakan ketika ingin menggantikan halaman saat ini dengan halaman baru, misalnya, setelah pengguna melakukan tindakan tertentu seperti login.
   ```dart
-  Navigator.pushReplacement(
-    context,
-    MaterialPageRoute(builder: (context) => HomeScreen()),
-    );
+  ...
+    onTap: () {
+        Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+            builder: (context) => MyHomePage(),
+        ));
+    },
+  ...
   ```
 ## 2. Jelaskan masing-masing layout widget pada Flutter dan konteks penggunaannya masing-masing!
 Berikut adalah penjelasan tentang beberapa widget layout di Flutter:
