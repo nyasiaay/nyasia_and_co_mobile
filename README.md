@@ -336,10 +336,13 @@ Setiap widget ini memiliki konteks penggunaannya masing-masing. Misalnya, widget
 ## 3. Sebutkan apa saja elemen input pada form yang kamu pakai pada tugas kali ini dan jelaskan mengapa kamu menggunakan elemen input tersebut!
 
 - **`TextFormField` untuk Nama Item**
+
   Berfungsi untuk memasukkan dan mengumpulkan data nama item dari input pengguna. Untuk Nama Item saya menggunakan tipe data `string`. Memiliki fungsi `validator` untuk memastikan input sudah diisi
 - **`TextFormField` untuk Jumlah**
+
   Berfungsi untuk memasukkan dan mengumpulkan data jumlah dari input pengguna. Untuk jumla saya menggunakan tipe data `integer`. Memiliki fungsi `validator` untuk memastikan input sudah diisi dan merupakan angka
 - **`TextFormField` untuk Deskripsi**
+
   Berfungsi untuk memasukkan dan mengumpulkan data deskripsi dari input pengguna. Untuk deskripsi saya menggunakan tipe data `string`. Memiliki fungsi `validator` untuk memastikan input sudah diisi
 
 ## 4. Bagaimana penerapan clean architecture pada aplikasi Flutter?
