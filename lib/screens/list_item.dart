@@ -14,7 +14,7 @@ class ItemPage extends StatefulWidget {
 class _ItemPageState extends State<ItemPage> {
   Future<List<Item>> fetchItem() async {
     // TODO: Ganti URL dan jangan lupa tambahkan trailing slash (/) di akhir URL!
-    var url = Uri.parse('http://127.0.0.1:8000/json/');
+    var url = Uri.parse('https://nyasia-aludra-tugas.pbp.cs.ui.ac.id/json/');
     var response = await http.get(
       url,
       headers: {"Content-Type": "application/json"},
@@ -38,6 +38,8 @@ class _ItemPageState extends State<ItemPage> {
     return Scaffold(
         appBar: AppBar(
           title: const Text('Item'),
+          backgroundColor: const Color.fromARGB(1000, 125, 216, 201),
+          foregroundColor: Colors.white,
         ),
         drawer: const LeftDrawer(),
         body: FutureBuilder(
