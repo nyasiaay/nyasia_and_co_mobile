@@ -752,3 +752,40 @@ Berikut adalah lapisan utama dalam Clean Architecture pada Flutter:
     });
     }
     ```
+
+# Tugas 7
+
+## 1. Apakah bisa kita melakukan pengambilan data JSON tanpa membuat model terlebih dahulu? Jika iya, apakah hal tersebut lebih baik daripada membuat model sebelum melakukan pengambilan data JSON?
+Ya, kita dapat melakukan pengambilan data JSON tanpa membuat model terlebih dahulu di Flutter. Hal ini dapat dilakukan dengan memasukkan data-data JSON ke dalam map.
+
+Namun, pendekatan ini mungkin tidak selalu lebih baik daripada membuat model sebelum melakukan pengambilan data JSON. Membuat model dapat membantu kita mengetahui secara pasti jenis data apa yang ingin kita ambil dan mempermudah proses pengambilan dan penugasan data. Selain itu, model juga mempermudah pemahaman dan pemeliharaan kode dalam jangka panjang.
+
+Jadi, meskipun teknisnya kita bisa mengambil data JSON tanpa model, biasanya lebih baik untuk membuat model terlebih dahulu.
+
+## 2. Jelaskan fungsi dari CookieRequest dan jelaskan mengapa instance CookieRequest perlu untuk dibagikan ke semua komponen di aplikasi Flutter.
+`CookieRequest` adalah kelas yang digunakan untuk mengirim permintaan `HTTP` yang menyertakan cookie. Cookie mungkin disertakan dalam permintaan `HTTP` saat dikirim. Hal ini memungkinkan server untuk mengenali pengguna yang berwenang dan menyimpan informasi sesi.
+
+Karena setiap komponen dapat mengakses cookie yang sama, objek `CookieRequest` harus dibagikan ke seluruh komponen dalam aplikasi Flutter. Hasilnya, setiap komponen memiliki akses ke data yang sama tentang pengguna resmi dan sesi pengguna. Hal ini sangat penting dalam aplikasi yang memerlukan autentikasi pengguna.
+
+## 3. Jelaskan mekanisme pengambilan data dari JSON hingga dapat ditampilkan pada Flutter.
+1. **Membuat Permintaan HTTP**: Pertama, kita perlu membuat permintaan HTTP ke endpoint API yang menyediakan data JSON. Ini biasanya dilakukan dengan menggunakan paket http di Flutter untuk mengirim permintaan GET ke URL API.
+2. **Mendapatkan Respons**: Setelah permintaan dikirim, kita akan menerima respons dari server. Respons ini biasanya berisi data dalam format JSON.
+3. **Decoding Data JSON**: Setelah kita menerima respons, kita perlu mendecode data JSON menjadi format yang dapat dipahami oleh Dart. Ini biasanya dilakukan dengan menggunakan fungsi `jsonDecode` dari library `dart:convert`.
+4. **Membuat Model Data**: Setelah data telah didecode, kita biasanya ingin mengubah data tersebut menjadi objek Dart yang lebih mudah digunakan. Ini biasanya dilakukan dengan membuat kelas model yang memiliki metode fromJson. Metode ini mengambil Map (hasil dari `jsonDecode`) dan mengubahnya menjadi instance dari kelas model.
+5. **Menampilkan Data**: Setelah kita memiliki data dalam bentuk objek Dart, kita dapat menampilkan data tersebut di widget Flutter.
+
+ ## 4. Jelaskan mekanisme autentikasi dari input data akun pada Flutter ke Django hingga selesainya proses autentikasi oleh Django dan tampilnya menu pada Flutter.
+
+ ## 5. Sebutkan seluruh widget yang kamu pakai pada tugas ini dan jelaskan fungsinya masing-masing.
+- **Scaffold**: Menyediakan kerangka kerja yang mengimplementasikan struktur tata letak visual desain material dasar. 
+- **AppBar**: Widget yang ditampilkan di bagian atas layar dan dapat berisi teks, ikon, atau widget lainnya. 
+- **LeftDrawer**: Widget yang menyediakan navigasi ke halaman lain. Dibuka dari sisi kiri layar dengan menggeser dari kiri ke kanan atau mengklik ikon menu di AppBar.
+- **FutureBuilder**: Widget yang membangun dirinya sendiri berdasarkan snapshot interaksi terbaru dengan Future. 
+- **Column**: Widget yang menampilkan anak-anaknya dalam array vertikal. 
+- **ListView.builder**: Widget yang digunakan untuk merender daftar panjang atau tak terbatas, terutama daftar data yang diambil dari API. Hanya item yang terlihat dari daftar yang dipanggil untuk mengurangi konsumsi sumber daya dan meningkatkan kinerja.
+- **Container**: Widget induk yang dapat berisi beberapa widget anak dan mengelolanya secara efisien melalui lebar, tinggi, padding, warna latar belakang, dll.
+- **Text**: Widget yang memungkinkan untuk menampilkan teks di aplikasi Flutter.
+- **SizedBox**: Kotak sederhana dengan ukuran tertentu. Dapat digunakan untuk mengatur batasan ukuran pada widget anak, letakkan SizedBox kosong di antara dua widget untuk mendapatkan ruang di antara, atau lainnya.
+- **ElevatedButton**: Merupakan "tombol tinggi" Desain Material. Menambahkan dimensi pada tata letak yang sebagian besar datar.
+
+ ## 6. Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step! (bukan hanya sekadar mengikuti tutorial).
