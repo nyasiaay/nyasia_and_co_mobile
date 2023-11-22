@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:nyasia_and_co/models/item.dart';
-import 'package:nyasia_and_co/widgets/left_drawer.dart';
 import 'package:nyasia_and_co/screens/detail_item.dart';
+import 'package:nyasia_and_co/widgets/left_drawer.dart';
 
 class ItemPage extends StatefulWidget {
   const ItemPage({Key? key}) : super(key: key);
@@ -20,7 +20,11 @@ class _ItemPageState extends State<ItemPage> {
       url,
       headers: {"Content-Type": "application/json"},
     );
+
+    // melakukan decode response menjadi bentuk json
     var data = jsonDecode(utf8.decode(response.bodyBytes));
+
+    // melakukan konversi data json menjadi object Item
     List<Item> list_Item = [];
     for (var d in data) {
       if (d != null) {
@@ -35,7 +39,7 @@ class _ItemPageState extends State<ItemPage> {
     return Scaffold(
         appBar: AppBar(
           title: const Text('Item'),
-          backgroundColor: const Color.fromARGB(1000, 125, 216, 201),
+          backgroundColor: const Color.fromARGB(255, 125, 216, 201),
           foregroundColor: Colors.white,
         ),
         drawer: const LeftDrawer(),
@@ -50,9 +54,8 @@ class _ItemPageState extends State<ItemPage> {
                     children: [
                       Text(
                         "Tidak ada data item.",
-                        style: TextStyle(
-                            color: Color.fromARGB(1000, 125, 216, 201),
-                            fontSize: 20),
+                        style:
+                            TextStyle(color: Color(0xff59A5D8), fontSize: 20),
                       ),
                       SizedBox(height: 8),
                     ],
@@ -60,7 +63,17 @@ class _ItemPageState extends State<ItemPage> {
                 } else {
                   return ListView.builder(
                       itemCount: snapshot.data!.length,
-                      itemBuilder: (_, index) => Container(
+                      itemBuilder: (_, index) => InkWell(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => DetailItemPage(
+                                    item: snapshot.data![index]),
+                              ),
+                            );
+                          },
+                          child: Container(
                             margin: const EdgeInsets.symmetric(
                                 horizontal: 16, vertical: 12),
                             padding: const EdgeInsets.all(20.0),
@@ -76,24 +89,14 @@ class _ItemPageState extends State<ItemPage> {
                                   ),
                                 ),
                                 const SizedBox(height: 10),
-                                Text("${snapshot.data![index].fields.amount}"),
+                                Text(
+                                    "Amount : ${snapshot.data![index].fields.amount}"),
                                 const SizedBox(height: 10),
                                 Text(
-                                    "${snapshot.data![index].fields.description}"),
-                                ElevatedButton(
-                                  onPressed: () async {
-                                    Navigator.pushReplacement(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => DetailItemPage(
-                                              id: snapshot.data![index].pk)),
-                                    );
-                                  },
-                                  child: const Text('Detail Item'),
-                                ),
+                                    "${snapshot.data![index].fields.description}")
                               ],
                             ),
-                          ));
+                          )));
                 }
               }
             }));
