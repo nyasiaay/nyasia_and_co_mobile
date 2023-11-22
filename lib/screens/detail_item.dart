@@ -1,21 +1,19 @@
+import 'dart:ui';
+import 'package:nyasia_and_co/models/item.dart';
+import 'package:nyasia_and_co/widgets/left_drawer.dart';
+import 'package:nyasia_and_co/screens/list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:nyasia_and_co/models/item.dart';
-import 'package:nyasia_and_co/widgets/left_drawer.dart';
-import 'package:nyasia_and_co/screens/detail_item.dart';
 
-class ItemPage extends StatefulWidget {
-  const ItemPage({Key? key}) : super(key: key);
+class DetailItemPage extends StatelessWidget {
+  const DetailItemPage({Key? key, required this.id}) : super(key: key);
+  final int id;
 
-  @override
-  _ItemPageState createState() => _ItemPageState();
-}
-
-class _ItemPageState extends State<ItemPage> {
   Future<List<Item>> fetchItem() async {
     // TODO: Ganti URL dan jangan lupa tambahkan trailing slash (/) di akhir URL!
-    var url = Uri.parse('https://nyasia-aludra-tugas.pbp.cs.ui.ac.id/json/');
+    var url =
+        Uri.parse('https://nyasia-aludra-tugas.pbp.cs.ui.ac.id/json/${id}');
     var response = await http.get(
       url,
       headers: {"Content-Type": "application/json"},
@@ -34,7 +32,7 @@ class _ItemPageState extends State<ItemPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Item'),
+          title: const Text('Detail Item'),
           backgroundColor: const Color.fromARGB(1000, 125, 216, 201),
           foregroundColor: Colors.white,
         ),
@@ -76,7 +74,8 @@ class _ItemPageState extends State<ItemPage> {
                                   ),
                                 ),
                                 const SizedBox(height: 10),
-                                Text("${snapshot.data![index].fields.amount}"),
+                                Text(
+                                    "Amount: ${snapshot.data![index].fields.amount}"),
                                 const SizedBox(height: 10),
                                 Text(
                                     "${snapshot.data![index].fields.description}"),
@@ -85,11 +84,10 @@ class _ItemPageState extends State<ItemPage> {
                                     Navigator.pushReplacement(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => DetailItemPage(
-                                              id: snapshot.data![index].pk)),
+                                          builder: (context) => ItemPage()),
                                     );
                                   },
-                                  child: const Text('Detail Item'),
+                                  child: const Text('Kembali'),
                                 ),
                               ],
                             ),
