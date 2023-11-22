@@ -39,6 +39,8 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Login'),
+        backgroundColor: Color.fromARGB(1000, 125, 216, 201),
+        foregroundColor: Colors.white,
       ),
       body: Container(
         padding: const EdgeInsets.all(16.0),
@@ -68,8 +70,8 @@ class _LoginPageState extends State<LoginPage> {
                 // Cek kredensial
                 // TODO: Ganti URL dan jangan lupa tambahkan trailing slash (/) di akhir URL!
                 // Untuk menyambungkan Android emulator dengan Django pada localhost,
-                final response =
-                    await request.login("https://nyasia-aludra-tugas.pbp.cs.ui.ac.id/auth/login/", {
+                final response = await request.login(
+                    "https://nyasia-aludra-tugas.pbp.cs.ui.ac.id/auth/login/", {
                   'username': username,
                   'password': password,
                 });
