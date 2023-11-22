@@ -797,9 +797,9 @@ Karena setiap komponen dapat mengakses cookie yang sama, objek `CookieRequest` h
 1. **Memastikan deployment proyek tugas Django kamu telah berjalan dengan baik.** 
 
 Melakukan deployment ulang pada proyek django agar ter-update dan pasti berjalan
+
 2. **Membuat halaman login pada proyek tugas Flutter.**
 
-3. **Mengintegrasikan sistem autentikasi Django dengan proyek tugas Flutter.**
 Saya membuat berkas baru pada direktori `lib/screens/` dengan berkas bernama `login.dart` dan berisikan kode sebagai berikut
 ```dart
 import 'package:nyasia_and_co/screens/menu.dart';
@@ -916,7 +916,9 @@ class _LoginPageState extends State<LoginPage> {
   }
 }
 ```
-Lalu untuk menyambukannya dengan proyek django, pertama-tama kita buat app baru bernama `authentication`, setelah itu kita update `settings.py` pada proyek utama dengan menambahkan `authentication` pada `INSTALLED_APPS`.
+3. **Mengintegrasikan sistem autentikasi Django dengan proyek tugas Flutter.**
+
+Lalu untuk menyambungkannya dengan proyek django, pertama-tama kita buat app baru bernama `authentication`, setelah itu kita update `settings.py` pada proyek utama dengan menambahkan `authentication` pada `INSTALLED_APPS`.
 
 Selanjutnya saya jalankan perintah `pip install django-cors-headers` untuk menginstal library yang dibutuhkan. Lalu, Tambahkan `corsheaders` ke `INSTALLED_APPS` dan tambahkan `corsheaders.middleware.CorsMiddleware` pada main proyek `settings.py` aplikasi Django. Dan juga saya tambahkan beberapa variabel di bawah ke dalam `settings.py`
 ```python
@@ -1019,6 +1021,7 @@ class MyApp extends StatelessWidget {
   }
 }
 ```
+
 4. **Membuat model kustom sesuai dengan proyek aplikasi Django.**
 
 Saya buka endpoint JSON yang sudah saya buat sebelumnya. Lalu, saya *copy* data JSON dan buka website`Quicktype` Pada website `Quicktype`, ubahlah setup name menjadi Item, source type menjadi JSON, dan language menjadi Dart *Paste* data JSON yang telah disalin sebelumnya ke dalam textbox yang tersedia pada `Quicktype`. Klik pilihan `Copy Code` pada `Quicktype`. Setelah mendapatkan kode model melalui `Quicktype`, saya buka kembali proyek Flutter, buatlah berkas baru pada direktori `lib/models` dengan nama `item.dart`, dan *pastte* kode yang sudah *dicpy* dari `Quicktype`. Berikut adalah isi berkas `item.dart`
@@ -1087,6 +1090,7 @@ class Fields {
 ```
 
 5. **Membuat halaman yang berisi daftar semua item yang terdapat pada endpoint JSON di Django yang telah kamu deploy** 
+
 Saya membuat berkas baru dengan nama `list_item.dart` pada direktori `lib/screens` dan menambahkan kode sebagai berikut
 ```dart
 import 'package:flutter/material.dart';
@@ -1187,6 +1191,7 @@ Pada berkas `list_item.dart` tambahkan kode sebagai berikut ini
 ```
 
 6. **Membuat halaman detail untuk setiap item yang terdapat pada halaman daftar Item.**
+
 Saya membuat file baru bernama `detail_item.dart` yang berisikan kode sebagai berikut
 ```dart
 import 'package:flutter/material.dart';
