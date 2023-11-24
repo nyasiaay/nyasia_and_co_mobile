@@ -1,4 +1,5 @@
 import 'package:nyasia_and_co/screens/menu.dart';
+import 'package:nyasia_and_co/screens/register.dart';
 import 'package:flutter/material.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
@@ -106,6 +107,23 @@ class _LoginPageState extends State<LoginPage> {
                 }
               },
               child: const Text('Login'),
+            ),
+            SizedBox(height: 20),
+            Text(
+              'Don`t have an account yet?',
+              style: TextStyle(fontSize: 16),
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                // Navigate to registration page
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const RegistrationPage()),
+                );
+              },
+              child: const Text('Register'),
             ),
           ],
         ),
